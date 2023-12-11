@@ -25,6 +25,14 @@ function multiplier(x, y) {}
 
 function divider(x, y) {}
 
-let tests = [assertEq(adder(5, 7), 12), assertEq(subtracter(5, 7), -2)];
+let tests = [
+    function testAdder() {
+        return assertEq(adder(5, 7), 12);
+    },
+
+    function testSubtractor() {
+        return assertEq(subtracter(5, 7), -2);
+    },
+];
 
 export { tests };
