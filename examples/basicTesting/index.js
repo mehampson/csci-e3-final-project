@@ -1,4 +1,4 @@
-import { assertEq, assertNaN } from "../testBiker.js";
+import { assertEq, assertNaN } from "../../testBiker.js";
 
 /* Let's reimplement some basic arithmetic in this example code. */
 
@@ -35,7 +35,7 @@ function multiplier(x, y) {
         y = subtracter(y, 1);
     }
 
-    // Obviously a bitwise XOR is the best way to tell if we need to convert back to a negative number
+    // Obviously a bitwise XOR is the best way to tell if our result should be a negative number
     if (negative_x ^ negative_y) {
         result = result * -1;
     }

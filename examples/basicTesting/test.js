@@ -1,5 +1,5 @@
 import { tests } from "./index.js";
-import { assertEq, testBiker } from "../testBiker.js";
+import { assertEq, testBiker } from "../../testBiker.js";
 
 /* Tests can be imported from your project, or defined in your test file */
 function localTest() {

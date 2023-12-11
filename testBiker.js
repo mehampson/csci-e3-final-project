@@ -11,9 +11,14 @@ class Fail {
 }
 
 function testBiker(tests) {
+    /* console.log supports CSS, but I imagine using this in a terminal,
+     * rather than a browser, so we'll use ANSI color codes instead. */
+    const passColor = "\u001b[32m";
+    const failColor = "\u001b[31m ";
+    const errorColor = "\u001b[35m";
+    const resetColor = "\u001b[0m";
+
     let passes = 0;
-    let fails = 0;
-    let errors = 0;
     for (test of tests) {
         let result = test();
         let c;
@@ -21,17 +26,22 @@ function testBiker(tests) {
         if (result instanceof Pass) {
             passes += 1;
             msg = result.msg;
+            color = passColor;
         } else if (result instanceof Fail) {
-            fails += 1;
             msg = result.msg;
+            color = failColor;
         } else {
-            errors += 1;
             msg = "Invalid test";
+            color = errorColor;
         }
         c += 1;
-        console.log(`  ${test.name}: ${msg}`);
+        console.log(`  ${test.name}: ${color}${msg}${resetColor}`);
     }
-    console.log(`${passes}/${tests.length} tests passed.`);
+    console.log(
+        `${passes == tests.length ? "Success" : "Uh-oh"}: ${passes}/${
+            tests.length
+        } tests passed.`
+    );
 }
 
 /* This is our core assertion test. We just check if `test` is true or not,
@@ -81,10 +91,18 @@ function assertException(test) {
     return;
 }
 
+function assertIsInstance(test, value) {
+    return assert(
+        test instanceof value,
+        `${test} is not an instance of ${value}`
+    );
+}
+
 module.exports = {
     Pass,
     Fail,
     testBiker,
+    assert,
     assertEq,
     assertNotEq,
     assertException,
