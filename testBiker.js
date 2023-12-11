@@ -10,18 +10,6 @@ class Fail {
     }
 }
 
-function assertEq(test, value) {
-    try {
-        if (test == value) {
-            return new Pass();
-        } else {
-            return new Fail(`${test} != ${value}`);
-        }
-    } catch (error) {
-        return new Fail(`${error}`);
-    }
-}
-
 function testBiker(tests) {
     let passes = 0;
     let fails = 0;
@@ -46,4 +34,64 @@ function testBiker(tests) {
     console.log(`${passes}/${tests.length} tests passed.`);
 }
 
-module.exports = { Pass, Fail, testBiker, assertEq };
+/* This is our core assertion test. We just check if `test` is true or not,
+ * and return a Pass or Fail object*/
+
+function assert(test, failMsg) {
+    try {
+        if (test) {
+            return new Pass();
+        } else {
+            return new Fail(`${failMsg}`);
+        }
+    } catch (error) {
+        return new Fail(`${error}`);
+    }
+}
+
+function assertEq(test, value) {
+    return assert(test == value, `${test} != ${value}`);
+}
+
+function assertNotEq(test, value) {
+    return assert(test != value, `${test} == ${value}`);
+}
+
+function assertGT(test, value) {
+    return assert(test > value, `${test} <= ${value}`);
+}
+
+function assertGTE(test, value) {
+    return assert(test >= value, `${test} < ${value}`);
+}
+
+function assertLT(test, value) {
+    return assert(test < value, `${test} >= ${value}`);
+}
+
+function assertLTE(test, value) {
+    return assert(test <= value, `${test} > ${value}`);
+}
+
+function assertNaN(test) {
+    return assert(isNaN(test), `${test} is a number`);
+}
+
+function assertException(test) {
+    return;
+}
+
+module.exports = {
+    Pass,
+    Fail,
+    testBiker,
+    assertEq,
+    assertNotEq,
+    assertException,
+    assertGT,
+    assertGTE,
+    assertLT,
+    assertLTE,
+    assertNaN,
+    assertNotEq,
+};

@@ -1,4 +1,4 @@
-import { assertEq } from "../testBiker.js";
+import { assertEq, assertNaN } from "../testBiker.js";
 
 /* Let's reimplement some basic arithmetic in this example code. */
 
@@ -62,6 +62,14 @@ let tests = [
 
     function testMulitplier() {
         return assertEq(multiplier(3, -4), -12);
+    },
+
+    function testBadDivider() {
+        return assertEq(divider(4, 2), 2);
+    },
+
+    function testNaN() {
+        return assertNaN(divider(4, 0));
     },
 ];
 
