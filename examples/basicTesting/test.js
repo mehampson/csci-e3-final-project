@@ -1,12 +1,15 @@
 import { tests } from "./index.js";
 import { assertEq, testBiker } from "../../testBiker.js";
 
-/* Tests can be imported from your project, or defined in your test file */
-function localTest() {
+/* Your test file is where you prepare your tests. You can write them here,
+ * or you can import them from other locations in your project.
+ * Just be sure to combine all your test arrays and send it to testBiker. */
+
+function singleTest() {
     return assertEq(1, 1);
 }
 
-tests.push(localTest);
+tests.push(singleTest);
 
-/* Just send an array of tests to testBiker */
+/* Send an array of tests to testBiker */
 testBiker(tests);

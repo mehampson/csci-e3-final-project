@@ -9,7 +9,8 @@ function mockRecipeApi() {
 }
 
 /* Our custom test. We do our business, then return an assertion about it.
- * We actually do have assertIsInstance, but this is how we'd test for it if we didn't. */
+ * We actually do have assertIsInstance, but this is how we'd write a custom
+ * test for it if we didn't. */
 function testCustom() {
     let json = mockRecipeApi();
     let newRecipe = getRecipeFromAPI(json);

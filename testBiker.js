@@ -44,8 +44,10 @@ function testBiker(tests) {
     );
 }
 
+/* *** Assertions *** */
+
 /* This is our core assertion test. We just check if `test` is true or not,
- * and return a Pass or Fail object*/
+ * and return a Pass or Fail object. Most of our assertions use this, but not all. */
 
 function assert(test, failMsg) {
     try {
@@ -59,43 +61,56 @@ function assert(test, failMsg) {
     }
 }
 
+// Equality test
 function assertEq(test, value) {
     return assert(test == value, `${test} != ${value}`);
 }
 
+// Inequality test
 function assertNotEq(test, value) {
     return assert(test != value, `${test} == ${value}`);
 }
 
-function assertGT(test, value) {
-    return assert(test > value, `${test} <= ${value}`);
-}
-
-function assertGTE(test, value) {
-    return assert(test >= value, `${test} < ${value}`);
-}
-
-function assertLT(test, value) {
-    return assert(test < value, `${test} >= ${value}`);
-}
-
-function assertLTE(test, value) {
-    return assert(test <= value, `${test} > ${value}`);
-}
-
+// Test for NaN
 function assertNaN(test) {
     return assert(isNaN(test), `${test} is a number`);
 }
 
-function assertException(test) {
-    return;
+// Test that a value is not infinite
+function assertFinite(test) {
+    return assert(Number.isFinite(test), `${test} is infinite`);
 }
 
-function assertIsInstance(test, value) {
+// Test that a value is infinite
+function assertInfinite(test) {
+    return assert(!Number.isFinite(test), `${test} is finite`);
+}
+
+// Test that a callable function will raise an exception.
+// Write these tests as: assertException( () => {bad_behavior()} )
+function assertException(test) {
+    if (typeof test === "function") {
+        try {
+            test();
+            return new Fail(`${test} did not raise an Exception`);
+        } catch (error) {
+            return new Pass();
+        }
+    } else {
+        return new Fail(`${test} is not callable`);
+    }
+}
+
+// Test that a value will be an instance of something
+function assertInstance(test, value) {
     return assert(
         test instanceof value,
         `${test} is not an instance of ${value}`
     );
+}
+
+function assertType(test, value) {
+    return assert(typeof test == value, `${test} is not a ${value}`);
 }
 
 module.exports = {
@@ -106,10 +121,9 @@ module.exports = {
     assertEq,
     assertNotEq,
     assertException,
-    assertGT,
-    assertGTE,
-    assertLT,
-    assertLTE,
     assertNaN,
-    assertNotEq,
+    assertInstance,
+    assertFinite,
+    assertInfinite,
+    assertType,
 };

@@ -1,6 +1,15 @@
-import { assertEq, assertNaN } from "../../testBiker.js";
+import {
+    assertEq,
+    assertException,
+    assertInfinite,
+    assertNotEq,
+    assertNaN,
+    assertInstance,
+    assertFinite,
+    assertType,
+} from "../../testBiker.js";
 
-/* Let's reimplement some basic arithmetic in this example code. */
+/* Let's reimplement some basic arithmetic in this example code, just to give us something to test. */
 
 function adder(x, y) {
     if (y >= 0) {
@@ -44,32 +53,55 @@ function multiplier(x, y) {
 
 function divider(x, y) {
     if (y == 0) {
-        return NaN;
+        return Infinity;
     } else {
-        // This might need some work?
+        // There may be edge cases where this logic does not work -- need to investigate further
         return 7;
     }
 }
 
+function makeArray(x) {
+    if (x < 0) {
+        throw new Error("Arrays can't be negative in size!");
+    } else {
+        return new Array(x);
+    }
+}
+
 let tests = [
+    // Test that we get the values we should
     function testAdder() {
         return assertEq(adder(5, 7), 12);
     },
 
     function testSubtractor() {
-        return assertEq(subtracter(5, 7), -2);
+        return assertType(subtracter(5, 7), "number");
     },
 
+    // Test that we *don't* get a value that would indicate a bug
     function testMulitplier() {
-        return assertEq(multiplier(3, -4), -12);
+        return assertNotEq(multiplier(3, -4), 12);
     },
 
-    function testBadDivider() {
-        return assertEq(divider(4, 2), 2);
+    function testDivider() {
+        return assertEq(divider(10, 5), 2);
+    },
+
+    function testDivideByZero() {
+        return assertInfinite(divider(14, 0));
     },
 
     function testNaN() {
-        return assertNaN(divider(4, 0));
+        return assertNaN(makeArray(5));
+    },
+
+    function testInstance() {
+        return assertInstance(makeArray(5), Array);
+    },
+
+    // We can write tests for cases that *should* throw errors
+    function testExceptions() {
+        return assertException(() => makeArray(-5));
     },
 ];
 
