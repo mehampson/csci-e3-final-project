@@ -7,7 +7,7 @@ import {
     assertInstance,
     assertFinite,
     assertType,
-} from "../../testBiker.js";
+} from "../../testBiker.mjs";
 
 /* Let's reimplement some basic arithmetic in this example code, just to give us something to test. */
 

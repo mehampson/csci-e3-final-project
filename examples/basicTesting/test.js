@@ -1,5 +1,5 @@
 import { tests } from "./index.js";
-import { assertEq, testBiker } from "../../testBiker.js";
+import { assertEq, testBiker } from "../../testBiker.mjs";
 
 /* Your test file is where you prepare your tests. You can write them here,
  * or you can import them from other locations in your project.

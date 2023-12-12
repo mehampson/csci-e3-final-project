@@ -19,10 +19,9 @@ function testBiker(tests) {
     const resetColor = "\u001b[0m";
 
     let passes = 0;
-    for (test of tests) {
+    for (let test of tests) {
         let result = test();
-        let c;
-        let msg;
+        let c, msg, color;
         if (result instanceof Pass) {
             passes += 1;
             msg = result.msg;
@@ -113,7 +112,7 @@ function assertType(test, value) {
     return assert(typeof test == value, `${test} is not a ${value}`);
 }
 
-module.exports = {
+export {
     Pass,
     Fail,
     testBiker,

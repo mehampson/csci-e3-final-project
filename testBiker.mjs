@@ -10,32 +10,34 @@ class Fail {
     }
 }
 
-function testBiker(tests) {
-    /* console.log supports CSS, but I imagine using this in a terminal,
+function testBiker(tests, css) {
+    /* We might output to twoconsole.log supports CSS, but I imagine using this in a terminal,
      * rather than a browser, so we'll use ANSI color codes instead. */
-    const passColor = "\u001b[32m";
-    const failColor = "\u001b[31m ";
-    const errorColor = "\u001b[35m";
-    const resetColor = "\u001b[0m";
+
+    const format = css ? "css" : "ansi";
+
+    const passColor = { ansi: "\u001b[32m", css: "color:rgb(170,0,0" };
+    const failColor = { ansi: "\u001b[31m", css: "color:rgb(170,0,0" };
+    const errorColor = { ansi: "\u001b[35m", css: "color:rgb(170,0,0" };
+    const resetColor = { ansi: "\u001b[0m", css: "color:default" };
 
     let passes = 0;
-    for (test of tests) {
+    for (let test of tests) {
         let result = test();
-        let c;
-        let msg;
+        let c, msg, color;
         if (result instanceof Pass) {
             passes += 1;
             msg = result.msg;
-            color = passColor;
+            color = passColor[format];
         } else if (result instanceof Fail) {
             msg = result.msg;
-            color = failColor;
+            color = failColor[format];
         } else {
             msg = "Invalid test";
-            color = errorColor;
+            color = errorColor[format];
         }
         c += 1;
-        console.log(`  ${test.name}: ${color}${msg}${resetColor}`);
+        console.log(`  ${test.name}: ${color}${msg}${resetColor[format]}`);
     }
     console.log(
         `${passes == tests.length ? "Success" : "Uh-oh"}: ${passes}/${
@@ -113,7 +115,7 @@ function assertType(test, value) {
     return assert(typeof test == value, `${test} is not a ${value}`);
 }
 
-module.exports = {
+export {
     Pass,
     Fail,
     testBiker,

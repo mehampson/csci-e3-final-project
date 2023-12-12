@@ -1,5 +1,5 @@
 import { Recipe, getRecipeFromAPI } from "./index.js";
-import { assert, testBiker } from "../../testBiker.js";
+import { assert, testBiker } from "../../testBiker.mjs";
 
 /* Custom tests can be written */
 
