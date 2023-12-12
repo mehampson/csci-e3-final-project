@@ -78,3 +78,14 @@ $ node test
   customTest2: Fail: SomethingElse is not 9 characters long
 Uh-oh: 1/2 tests passed.
 ```
+
+## Examples
+
+See the Examples folder for some implementations:
+
+-   basicTesting: A few ways to organize multiple tests in a Node app
+-   customTests: Writing custom assertions
+-   webpage: How to use TestBiker for testing front-end Javascript
+-   json: Getting a JSON object back instead of printing to the console
+
+Most of these can be demoed by navigating to their folder and running `node test`. For the webpage example, install `http-server` or your alternative of choice, and visit the page in your browser.

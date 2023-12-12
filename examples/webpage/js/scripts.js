@@ -4,6 +4,7 @@ window.addEventListener("load", function () {
     this.document.getElementById("test-button").addEventListener(
         "click",
         (evt) => {
+            /* Here's our fancy logic. We'll need to test this. */
             let text = this.document
                 .getElementById("input")
                 .value.split("")
@@ -11,13 +12,11 @@ window.addEventListener("load", function () {
                 .join("");
 
             this.document.getElementById("target").innerText = text;
-
-            console.log("clicks");
         },
         false
     );
 
-    /* Here we've chosen to watch for a custom event type, to minimize the chance
+    /* We'll for a custom event type at the document level, to minimize the chance
      * that these tests could be accidentally run by an end user.
      * We can run our tests from the console with:
      *   document.dispatchEvent(new Event("test"))
@@ -43,8 +42,8 @@ window.addEventListener("load", function () {
                 }.bind(this),
             ];
 
-            // Use the optional 'renderer' parameter for Firefox, which doesn't support
-            // ANSI color codes in the console.
+            // Use the optional 'renderer' parameter to get CSS for Firefox,
+            // which doesn't support ANSI color codes in the console.
             testBiker(tests, "css");
         },
         false

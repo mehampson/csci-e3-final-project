@@ -18,10 +18,16 @@
                     <div class="box">
                         <h2 class="title">A Div</h2>
                         <p>This is a div.</p>
-                        <input id="input" class="input" type="text" />
-                        <button id="test-button" class="button">
-                            Reverse it
-                        </button>
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input id="input" class="input" type="text" />
+                            </div>
+                            <div class="control">
+                                <buton id="test-button" class="button is-info">
+                                    Reverse!
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -32,6 +38,14 @@
                             This is our target div, where things are backwards.
                         </p>
                         <span id="target"></span>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="box">
+                        <h2 class="title">Testing Instructions</h2>
+                        <p>Open up the developer console and run:</p>
+                        <pre>document.dispatchEvent(new Event("test"))</pre>
                     </div>
                 </div>
             </div>

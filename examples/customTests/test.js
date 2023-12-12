@@ -10,12 +10,14 @@ function mockRecipeApi() {
 
 /* Our custom test. We do our business, then return an assertion about it.
  * We actually do have assertIsInstance, but this is how we'd write a custom
- * test for it if we didn't. */
+ * test for it if we didn't.
+ *
+ * Here we're using a one-off custom assertion, but you define your own reusable ones.
+ * See the Readme for an example. */
 function testCustom() {
     let json = mockRecipeApi();
     let newRecipe = getRecipeFromAPI(json);
     return assert(newRecipe instanceof Recipe, "Not a valid recipe");
 }
 
-/* Send an array of tests to testBiker */
 testBiker([testCustom]);

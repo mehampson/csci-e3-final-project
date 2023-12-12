@@ -1,15 +1,18 @@
 import { tests } from "./index.js";
 import { assertEq, testBiker } from "../../testBiker.mjs";
 
-/* Your test file is where you prepare your tests. You can write them here,
- * or you can import them from other locations in your project.
+/* In a Node app, you can create a test file and configure it in package.jason.
+ * You can write them directly in the test file, or import them from other locations
+ * in your project -- whichever makes more sense in your situation.
  * Just be sure to combine all your test arrays and send it to testBiker. */
 
+// We already brought in our tests from index.js, but here's another one
 function singleTest() {
     return assertEq(1, 1);
 }
 
+// Just smoosh them together
 tests.push(singleTest);
 
-/* Send an array of tests to testBiker */
+// And send them off to TestBiker
 testBiker(tests);

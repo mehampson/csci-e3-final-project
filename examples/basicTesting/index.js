@@ -5,7 +5,6 @@ import {
     assertNotEq,
     assertNaN,
     assertInstance,
-    assertFinite,
     assertType,
 } from "../../testBiker.mjs";
 
@@ -74,6 +73,7 @@ let tests = [
         return assertEq(adder(5, 7), 12);
     },
 
+    // Test that subtractor is returning numbers
     function testSubtractor() {
         return assertType(subtracter(5, 7), "number");
     },
@@ -83,18 +83,22 @@ let tests = [
         return assertNotEq(multiplier(3, -4), 12);
     },
 
+    // There's no way this function is wrong, but better make sure
     function testDivider() {
         return assertEq(divider(10, 5), 2);
     },
 
+    // Test for inifinities
     function testDivideByZero() {
         return assertInfinite(divider(14, 0));
     },
 
+    // Test for NaN
     function testNaN() {
         return assertNaN(makeArray(5));
     },
 
+    // Test that we get an instance of something
     function testInstance() {
         return assertInstance(makeArray(5), Array);
     },
