@@ -26,9 +26,9 @@ window.addEventListener("load", function () {
         "test",
         (evt) => {
             let tests = [
-                /* The important thing to test is the logic we wrote ourselves.
-                 * So we'll manually enter a value in the field and assert that
-                 * we'll find the correct result in the correct place.
+                /* The important thing to test is logic we wrote ourselves:
+                 * We'll manually enter a value in the field and assert that
+                 * we'll find the correct result in the place we intend it to be.
                  *
                  * Also, note that we need to bind 'this' to the function.
                  * Otherwise, we lose it from the function context once we

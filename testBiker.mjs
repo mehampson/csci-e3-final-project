@@ -10,7 +10,7 @@ class Fail {
     }
 }
 
-function testBiker(tests, renderer) {
+function testBiker(tests, renderer = "console") {
     /* We might output to twoconsole.log supports CSS, but I imagine using this in a terminal,
      * rather than a browser, so we'll use ANSI color codes instead. */
 

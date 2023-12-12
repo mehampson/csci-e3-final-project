@@ -1,3 +1,80 @@
 # csci-e3-final-project
 
-TestBiker is a test runner for JavaScript projects,
+# TestBiker
+
+TestBiker is a simple test runner for JavaScript projects. Why TestBiker? Because I prefer biking to running.
+
+## Features
+
+TestBiker is fairly framework-agnostic. If you can import the module, you can probably use it. Your test results can displayed in a console window or returned as a JSON string for consumption elsewhere. TestBiker offers many types of test assertions:
+
+-   Equals something (assertEq)
+-   Does not equal something (assertNotEq)
+-   Raises an exception (assertException)
+-   Not a number (assertNaN)
+-   Is an instance of a class (assertInstance)
+-   Is a particular type (assertType)
+-   Is Infinity (assertInfinite)
+-   Is not Infinity (assertFinite)
+-   Is not null (assertNotNull)
+-   Is null (assertNull)
+
+Is it as fully-featured as Jest, Mocha, or any other JS test runner out there? No! Should you use it anyway? Umm... yes.
+
+## Usage
+
+Write each unit test as a named function that returns a specific assertion. Then pass an array with all of your test functions to the testBiker() runner function: TestBiker will run all your tests and show you the outcomes.
+
+`testBiker(Function[] tests, String:'console'|'css'|'json' renderer)`
+
+```javascript
+function exampleTest() {
+    let x = 1 + 1;
+    return assertEq(x, 2);
+}
+
+function exampleTest2() {
+    let x = makeThing();
+    return assertInstance(x, Thing);
+}
+
+testBiker([exampleTest, exampleTest2]);
+```
+
+```
+$ node test
+  exampleTest: Pass
+  exampleTest2: Pass
+Success: 2/2 tests passed.
+```
+
+## Custom Tests
+
+TestBiker lets you write your own assertions, if none of the prebuilt ones work. Just use the base `assert` function and provide a failure message
+
+```javascript
+function customAssertion(test) {
+    return assert(test.length == 9, `${test} is not 9 characters long`);
+}
+
+let tests = [
+    function customTest() {
+        let x = "TestBiker";
+        return customAssertion(x);
+    },
+
+    function customTest2() {
+        let x = "SomethingElse";
+        return customAssertion(x);
+    },
+];
+
+testBiker(tests);
+```
+
+```
+$ node test
+  customTest: Pass
+  customTest2: Fail: SomethingElse is not 9 characters long
+Uh-oh: 1/2 tests passed.
+```
