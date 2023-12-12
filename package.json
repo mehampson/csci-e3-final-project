@@ -1,0 +1,14 @@
+{
+  "name": "test-biker",
+  "version": "1.0.0",
+  "description": "TestBiker is a test runner for JavaScript projects,",
+  "main": "testBiker.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

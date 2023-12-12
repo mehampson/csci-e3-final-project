@@ -9,17 +9,18 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
         />
+        <script type="module" src="js/modules/testBiker.js"></script>
+        <script type="text/javascript" src="js/scripts.js"></script>
     </head>
     <body>
-        <script src="index.js"></script>
         <section class="section">
             <div class="columns">
                 <div class="column">
                     <div class="box">
                         <h2 class="title">A Div</h2>
                         <p>This is a div.</p>
-                        <input class="input" type="text" />
-                        <button class="button">Button</button>
+                        <input id="input" class="input" type="text" />
+                        <button id="test-button" class="button">Button</button>
                     </div>
                 </div>
 
@@ -27,6 +28,7 @@
                     <div class="box">
                         <h2 class="title">A Div</h2>
                         <p>This is a different div.</p>
+                        <span id="target"></span>
                     </div>
                 </div>
             </div>
