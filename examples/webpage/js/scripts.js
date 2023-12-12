@@ -43,9 +43,9 @@ window.addEventListener("load", function () {
                 }.bind(this),
             ];
 
-            // Use the optional 'css' parameter for Firefox, which doesn't support
+            // Use the optional 'renderer' parameter for Firefox, which doesn't support
             // ANSI color codes in the console.
-            testBiker(tests, true);
+            testBiker(tests, "css");
         },
         false
     );

@@ -10,17 +10,35 @@ class Fail {
     }
 }
 
-function testBiker(tests) {
-    /* console.log supports CSS, but I imagine using this in a terminal,
+function testBiker(tests, renderer) {
+    /* We might output to twoconsole.log supports CSS, but I imagine using this in a terminal,
      * rather than a browser, so we'll use ANSI color codes instead. */
+
+    let results = [];
+
+    for (let test of tests) {
+        let r = test();
+        r.name = test.name;
+        results.push(r);
+    }
+
+    if (renderer == "json") {
+        return JSON.stringify(results);
+    } else if (renderer == "css") {
+        renderCSS(results);
+    } else {
+        renderANSI(results);
+    }
+}
+
+function renderANSI(results) {
     const passColor = "\u001b[32m";
-    const failColor = "\u001b[31m ";
+    const failColor = "\u001b[31m";
     const errorColor = "\u001b[35m";
     const resetColor = "\u001b[0m";
-
     let passes = 0;
-    for (let test of tests) {
-        let result = test();
+
+    for (let result of results) {
         let c, msg, color;
         if (result instanceof Pass) {
             passes += 1;
@@ -34,11 +52,44 @@ function testBiker(tests) {
             color = errorColor;
         }
         c += 1;
-        console.log(`  ${test.name}: ${color}${msg}${resetColor}`);
+        console.log(`  ${result.name}: ${color}${msg}${resetColor}`);
     }
     console.log(
-        `${passes == tests.length ? "Success" : "Uh-oh"}: ${passes}/${
-            tests.length
+        `${passes == results.length ? "Success" : "Uh-oh"}: ${passes}/${
+            results.length
+        } tests passed.`
+    );
+}
+
+function renderCSS(results) {
+    const passColor = "rgb(0,170,0)";
+    const failColor = "rgb(170,0,0)";
+    const errorColor = "rgb(170,0,170";
+    let passes = 0;
+
+    for (let result of results) {
+        let c, msg, color;
+        if (result instanceof Pass) {
+            passes += 1;
+            msg = result.msg;
+            color = passColor;
+        } else if (result instanceof Fail) {
+            msg = result.msg;
+            color = failColor;
+        } else {
+            msg = "Invalid test";
+            color = errorColor;
+        }
+        c += 1;
+        console.log(
+            `  ${result.name}: %c${msg}%c`,
+            `color:${color}`,
+            `color:default`
+        );
+    }
+    console.log(
+        `${passes == results.length ? "Success" : "Uh-oh"}: ${passes}/${
+            results.length
         } tests passed.`
     );
 }
