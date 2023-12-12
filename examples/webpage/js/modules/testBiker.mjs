@@ -171,6 +171,25 @@ function assertNull(test) {
     return assert(test === null, `${test} is not null`);
 }
 
+// Example of what DOM-based assertions might look like
+
+function assertChildOf(test, parent) {
+    if (parent.children === undefined) {
+        return new Fail(`${parent} has no children`);
+    } else {
+        for (let child of parent.children) {
+            if (child === test) {
+                return new Pass();
+            }
+        }
+        return new Fail(`${test} is not a child of ${parent}`);
+    }
+}
+
+function assertNoChildren(test) {
+    return assert(test.children.length == 0, `${test} has children`);
+}
+
 export {
     Pass,
     Fail,
@@ -186,4 +205,6 @@ export {
     assertType,
     assertNotNull,
     assertNull,
+    assertChildOf,
+    assertNoChildren,
 };

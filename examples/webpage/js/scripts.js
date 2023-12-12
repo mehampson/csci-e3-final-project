@@ -1,4 +1,4 @@
-import { assertEq, testBiker } from "./modules/testBiker.mjs";
+import { assertEq, assertNoChildren, testBiker } from "./modules/testBiker.mjs";
 
 window.addEventListener("load", function () {
     this.document.getElementById("test-button").addEventListener(
@@ -11,10 +11,19 @@ window.addEventListener("load", function () {
                 .reverse()
                 .join("");
 
-            this.document.getElementById("target").innerText = text;
+            let newLi = this.document.createElement("li");
+            newLi.innerText = text;
+
+            this.document.getElementById("target").appendChild(newLi);
         },
         false
     );
+
+    this.document
+        .getElementById("reset-button")
+        .addEventListener("click", (evt) => {
+            this.document.getElementById("target").innerHTML = "";
+        });
 
     /* We'll for a custom event type at the document level, to minimize the chance
      * that these tests could be accidentally run by an end user.
@@ -38,7 +47,23 @@ window.addEventListener("load", function () {
                     let target = this.document.getElementById("target");
                     input.value = "test string";
                     button.click();
-                    return assertEq(target.innerText, "gnirts tset");
+                    return assertEq(target.lastChild.innerText, "gnirts tset");
+                }.bind(this),
+
+                /* And here we'll manually add something to #target, and make sure
+                 * our reset button removes it correctly. */
+                function resetTest() {
+                    let button = this.document.getElementById("reset-button");
+                    let target = this.document.getElementById("target");
+
+                    let newLi = this.document.createElement("li");
+                    newLi.innerText = "test text";
+
+                    target.appendChild(newLi);
+
+                    button.click();
+
+                    return assertNoChildren(target);
                 }.bind(this),
             ];
 
