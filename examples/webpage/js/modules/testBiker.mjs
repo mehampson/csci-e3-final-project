@@ -10,94 +10,102 @@ class Fail {
     }
 }
 
+class ColorFormat {
+    constructor(pass, fail, error, reset) {
+        this.pass = pass;
+        this.fail = fail;
+        this.error = error;
+        this.reset = reset;
+    }
+}
+
+const ColorANSI = new ColorFormat(
+    "\u001b[32m",
+    "\u001b[31m",
+    "\u001b[35m",
+    "\u001b[0m"
+);
+
+const ColorCSS = new ColorFormat(
+    "rgb(0,170,0)",
+    "rgb(170,0,0)",
+    "rgb(170,0,170",
+    "initial"
+);
+
 function testBiker(tests, renderer = "console") {
-    /* We might output to twoconsole.log supports CSS, but I imagine using this in a terminal,
-     * rather than a browser, so we'll use ANSI color codes instead. */
+    /* Takes an array of test functions and calls each one.
+     * The test functions should each return the value of an assertion
+     * function, like those below, for this to work as expected.
+     * (i.e., a Pass or Fail object.)
+     *
+     * The 'renderer' parameter controls the output behavior of this function.
+     * There are three options:
+     *   console: print to an ANSI-compatible terminal (includes Chromium-based browsers)
+     *   css: print to a CSS-compatible terminal (specifically, you'll need this in Firefox)
+     *   json: return the results as a JSON string instead of printing to the console */
 
     let results = [];
 
+    /* First we run through the tests and perform them. We add the function name to the
+     * results but nothing else at this point */
     for (let test of tests) {
         let r = test();
         r.name = test.name;
         results.push(r);
     }
 
+    // Now we do something with the results. JSON, or the console?
     if (renderer == "json") {
         return JSON.stringify(results);
-    } else if (renderer == "css") {
-        renderCSS(results);
     } else {
-        renderANSI(results);
-    }
-}
+        // Which of our defined ColorFormat instances we need to use?
+        let colors = renderer == "css" ? ColorCSS : ColorANSI;
 
-function renderANSI(results) {
-    const passColor = "\u001b[32m";
-    const failColor = "\u001b[31m";
-    const errorColor = "\u001b[35m";
-    const resetColor = "\u001b[0m";
-    let passes = 0;
+        // Counter for how many tests pass
+        let passes = 0;
 
-    for (let result of results) {
-        let c, msg, color;
-        if (result instanceof Pass) {
-            passes += 1;
-            msg = result.msg;
-            color = passColor;
-        } else if (result instanceof Fail) {
-            msg = result.msg;
-            color = failColor;
-        } else {
-            msg = "Invalid test";
-            color = errorColor;
+        for (let result of results) {
+            let msg, color;
+            if (result instanceof Pass) {
+                passes += 1;
+                msg = result.msg;
+                color = colors.pass;
+            } else if (result instanceof Fail) {
+                msg = result.msg;
+                color = colors.fail;
+            } else {
+                /* If the test function can't give us a Pass or Fail object,
+                 * it probably wasn't set up correctly to begin with. */
+                msg = "Invalid test";
+                color = colors.error;
+            }
+            /* Browser terminals can generally parse CSS embedded in the console messages.
+             * We use the %c operator to do that. */
+            if (renderer == "css") {
+                console.log(
+                    `  ${result.name}: %c${msg}%c`,
+                    `color:${color}`,
+                    `color:${colors.reset}`
+                );
+            } else {
+                /* This is our default case: the classic ANSI format */
+                console.log(`  ${result.name}: ${color}${msg}${colors.reset}`);
+            }
         }
-        c += 1;
-        console.log(`  ${result.name}: ${color}${msg}${resetColor}`);
-    }
-    console.log(
-        `${passes == results.length ? "Success" : "Uh-oh"}: ${passes}/${
-            results.length
-        } tests passed.`
-    );
-}
-
-function renderCSS(results) {
-    const passColor = "rgb(0,170,0)";
-    const failColor = "rgb(170,0,0)";
-    const errorColor = "rgb(170,0,170";
-    let passes = 0;
-
-    for (let result of results) {
-        let c, msg, color;
-        if (result instanceof Pass) {
-            passes += 1;
-            msg = result.msg;
-            color = passColor;
-        } else if (result instanceof Fail) {
-            msg = result.msg;
-            color = failColor;
-        } else {
-            msg = "Invalid test";
-            color = errorColor;
-        }
-        c += 1;
         console.log(
-            `  ${result.name}: %c${msg}%c`,
-            `color:${color}`,
-            `color:default`
+            `${passes == results.length ? "Success" : "Uh-oh"}: ${passes}/${
+                results.length
+            } tests passed.`
         );
     }
-    console.log(
-        `${passes == results.length ? "Success" : "Uh-oh"}: ${passes}/${
-            results.length
-        } tests passed.`
-    );
 }
 
 /* *** Assertions *** */
 
-/* This is our core assertion test. We just check if `test` is true or not,
- * and return a Pass or Fail object. Most of our assertions use this, but not all. */
+/* For our purposes, a usable assertion is any function/expression that can
+ * check if some test is true, and returns a Pass or Fail object.
+ * This is our core assert function. Most of our assertions use this, but not all. */
 
 function assert(test, failMsg) {
     try {
@@ -107,9 +115,12 @@ function assert(test, failMsg) {
             return new Fail(`${failMsg}`);
         }
     } catch (error) {
+        // In case something goes really wrong with the test
         return new Fail(`${error}`);
     }
 }
+
+/* Most of these delivered assertions are really simple, and their value is in the ergonomics */
 
 // Equality test
 function assertEq(test, value) {
@@ -121,7 +132,7 @@ function assertNotEq(test, value) {
     return assert(test != value, `${test} == ${value}`);
 }
 
-// Test for NaN
+// Test something is NaN
 function assertNaN(test) {
     return assert(isNaN(test), `${test} is a number`);
 }
@@ -137,8 +148,11 @@ function assertInfinite(test) {
 }
 
 // Test that a callable function will raise an exception.
-// Write these tests as: assertException( () => {bad_behavior()} )
+// Write these tests as: assertException( () => { bad_behavior() } )
 function assertException(test) {
+    /* This is counterintuitive: we're testing something that needs to
+     * throw an error in certain conditions. If the test function
+     * returns anything in those conditions, the test has failed.  */
     if (typeof test === "function") {
         try {
             test();
@@ -171,7 +185,10 @@ function assertNull(test) {
     return assert(test === null, `${test} is not null`);
 }
 
-// Example of what DOM-based assertions might look like
+/* Example of what DOM-based assertions might look like
+ * When writing DOM tests, bear in mind that 'this' might not
+ * be in context for the testBiker function, but you can bind
+ * it to the test. See the webpage example. */
 
 function assertChildOf(test, parent) {
     if (parent.children === undefined) {

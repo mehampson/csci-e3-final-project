@@ -18,8 +18,10 @@ TestBiker is fairly framework-agnostic. If you can import the module, you can pr
 -   Is not Infinity (assertFinite)
 -   Is not null (assertNotNull)
 -   Is null (assertNull)
+-   Is a child of (assertChildOf)
+-   Has no child (assertNoChildren)
 
-Is it as fully-featured as Jest, Mocha, or any other JS test runner out there? No! Should you use it anyway? Umm... yes.
+Is it as fully-featured as Jest, Mocha, or any other test runner out there? No! Should you use it anyway? Umm... yes.
 
 ## Usage
 
@@ -88,4 +90,4 @@ See the Examples folder for some implementations:
 -   webpage: How to use TestBiker for testing front-end Javascript
 -   json: Getting a JSON object back instead of printing to the console
 
-Most of these can be demoed by navigating to their folder and running `node test`. For the webpage example, install `http-server` or your alternative of choice, and visit the page in your browser.
+Most of these can be demoed by navigating to their folder and running `node test`. For the webpage example, serve the site with `http-server` or your alternative of choice, and visit the page in your browser.

@@ -42,12 +42,13 @@ window.addEventListener("load", function () {
                  * Otherwise, we lose it from the function context once we
                  * hand it off to testBiker. */
                 function reverseInputTest() {
-                    let input = this.document.getElementById("input");
-                    let button = this.document.getElementById("test-button");
-                    let target = this.document.getElementById("target");
-                    input.value = "test string";
-                    button.click();
-                    return assertEq(target.lastChild.innerText, "gnirts tset");
+                    this.document.getElementById("input").value = "test string";
+                    this.document.getElementById("test-button").click();
+                    return assertEq(
+                        this.document.getElementById("target").lastChild
+                            .innerText,
+                        "gnirts tset"
+                    );
                 }.bind(this),
 
                 /* And here we'll manually add something to #target, and make sure
