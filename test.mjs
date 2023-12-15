@@ -73,6 +73,23 @@ let tests = [
     function testNull() {
         return assertNull(null);
     },
+
+    function testJsonOutput() {
+        let jtests = [
+            function jPass() {
+                return new Pass();
+            },
+
+            function jFail() {
+                return new Fail("Json test");
+            },
+        ];
+
+        let json = testBiker(jtests, "json");
+        let expected =
+            '[{"msg":"Pass","name":"jPass"},{"msg":"Fail: Json test","name":"jFail"}]';
+        return assertEq(json, expected);
+    },
 ];
 
 testBiker(tests);
