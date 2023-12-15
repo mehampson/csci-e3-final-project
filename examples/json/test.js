@@ -10,14 +10,8 @@ function testJson() {
     return assertNotNull(newRecipe);
 }
 
-function testJsonFailure() {
-    let json = mockRecipeApi();
-    let newRecipe = getRecipeFromAPI(json);
-    return assertEq(newRecipe, 6);
-}
-
 /* Send an array of tests to testBiker, and get the results as a JSON string */
-let results = testBiker([testJson, testJsonFailure], "json");
+let results = testBiker([testJson], "json");
 
-// Just pretend this is an API call to send the results elsewhere
+// Just pretend this is an API call that's sending the results elsewhere
 console.log(JSON.parse(results));
