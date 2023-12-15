@@ -1,4 +1,8 @@
-import { assertEq, assertNoChildren, testBiker } from "./modules/testBiker.mjs";
+import {
+    assertEq,
+    assertNoChildren,
+    testBiker,
+} from "./modules/testBiker/main.mjs";
 
 window.addEventListener("load", function () {
     this.document.getElementById("test-button").addEventListener(

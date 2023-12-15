@@ -21,7 +21,7 @@ TestBiker is fairly framework-agnostic. If you can import the module, you can pr
 -   Is a child of (assertChildOf)
 -   Has no child (assertNoChildren)
 
-Is it as fully-featured as Jest, Mocha, or any other test runner out there? No! Should you use it anyway? Umm... yes.
+Is it as fully-featured as Jest, Mocha, or any other test runner out there? No, this is just a homework project! Should you use it anyway? Umm... yes.
 
 ## Usage
 
@@ -49,6 +49,8 @@ $ node test
   exampleTest2: Pass
 Success: 2/2 tests passed.
 ```
+
+You can do this in a test script and run it from the command line, trigger with an event listener in a front end script, or capture the results as JSON and work with them programatically.
 
 ## Custom Tests
 
