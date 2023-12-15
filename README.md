@@ -4,13 +4,13 @@
 
 TestBiker is a simple test runner for JavaScript projects. 
 
-Why write TestBiker for my CSCI E-3 final project? Because unit testing is neat and I've been thinking about how I would want it to work in JavaScript. I've used other JS frameworks a little bit, mainly Jest -- I know I'm reinventing the wheel and mine's not entirely round yet. (Side note: some of the techniques we're required to use for our project are in the examples, especially `webpage`, rather than the main testBiker code. I hope that's still in the spirit of things.)
+Why write TestBiker for my CSCI E-3 final project? Because unit testing is neat and I've been thinking about how I would want it to work in JavaScript. I've used other JS test frameworks a little bit, mainly Jest -- I know I'm reinventing the wheel and mine's not entirely round yet. (Side note: some of the techniques we're required to use for our project are in the examples, especially `webpage`, rather than the main testBiker code. I hope that's still in the spirit of things.)
 
 Why call it TestBiker? Because I prefer biking to running.
 
 ## Features
 
-TestBiker is fairly framework-agnostic. If you can import the module, you can probably use it. Your test results can displayed in a console window or returned as a JSON string for consumption elsewhere. TestBiker offers many types of test assertions:
+TestBiker is fairly framework-agnostic. If you can import the module, you can probably use it in your project. Your test results can displayed in a console window or returned as a JSON string for consumption elsewhere. TestBiker offers many types of test assertions:
 
 -   Equals something (assertEq)
 -   Does not equal something (assertNotEq)
@@ -25,7 +25,7 @@ TestBiker is fairly framework-agnostic. If you can import the module, you can pr
 -   Is a child of (assertChildOf)
 -   Has no child (assertNoChildren)
 
-Is it as fully-featured as Jest, Mocha, or any other test runner out there? No, this is just a homework project! Should you use it anyway? Umm... yes.
+Is it as fully-featured as Jest, Mocha, or any other test runner out there? No, this is just a homework project! There's tons of things it can't do! Should you use it anyway? Umm... yes.
 
 ## Usage
 
@@ -96,6 +96,6 @@ See the Examples folder for some how to use TestBiker:
 -   basicTesting: A few ways to organize multiple tests in a Node app
 -   customTests: Writing custom assertions
 -   webpage: How to use TestBiker for testing front-end Javascript, by listening for a custom event
--   json: Getting a JSON object back instead of printing to the console
+-   json: Getting test results back as a JSON object instead of printing to the console
 
 Most of these can be demoed by navigating to their folder and running `node test`. For the webpage example, serve the site with `http-server` or your alternative of choice, and visit the page in your browser.
