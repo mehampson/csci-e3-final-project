@@ -14,9 +14,9 @@ import {
     assertNull,
     assertChildOf,
     assertNoChildren,
-} from "./lib/assertions.mjs";
+} from "./lib/assertions.js";
 
-import { testBiker } from "./lib/testBiker.mjs";
+import { testBiker } from "./lib/testBiker.js";
 
 export {
     Pass,

@@ -15,7 +15,7 @@ import {
     testBiker,
     Pass,
     Fail,
-} from "./main.mjs";
+} from "./main.js";
 
 // Testing our assertions
 

@@ -1,5 +1,5 @@
 import { getRecipeFromAPI } from "./index.js";
-import { assertEq, assertNotNull, testBiker } from "../../main.mjs";
+import { assertEq, assertNotNull, testBiker } from "../../main.js";
 
 /* TestBiker can give you the test results in JSON */
 

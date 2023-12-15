@@ -2,7 +2,7 @@ import {
     assertEq,
     assertNoChildren,
     testBiker,
-} from "./modules/testBiker/main.mjs";
+} from "./modules/testBiker/main.js";
 
 window.addEventListener("load", function () {
     this.document.getElementById("test-button").addEventListener(

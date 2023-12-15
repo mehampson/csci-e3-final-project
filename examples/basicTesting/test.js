@@ -1,5 +1,5 @@
 import { tests } from "./index.js";
-import { assertEq, testBiker } from "../../main.mjs";
+import { assertEq, testBiker } from "../../main.js";
 
 /* In a Node app, you can create a test file and configure it in package.json.
  * You can write the tests directly in the test file, or import them from other locations

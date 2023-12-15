@@ -1,5 +1,5 @@
 import { Recipe, getRecipeFromAPI } from "./index.js";
-import { assert, testBiker } from "../../main.mjs";
+import { assert, testBiker } from "../../main.js";
 
 /* Custom tests can be written. We just do our business, then return an assertion about it.
  * We actually do have assertIsInstance, but this is how we'd write a custom

@@ -1,4 +1,4 @@
-import { Pass, Fail } from "./assertions.mjs";
+import { Pass, Fail } from "./assertions.js";
 
 class ColorFormat {
     constructor(pass, fail, error, reset) {

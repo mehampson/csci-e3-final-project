@@ -6,7 +6,7 @@ import {
     assertNaN,
     assertInstance,
     assertType,
-} from "../../main.mjs";
+} from "../../main.js";
 
 /* Let's reimplement some basic arithmetic in this example code, just to give us something to test. */
 
